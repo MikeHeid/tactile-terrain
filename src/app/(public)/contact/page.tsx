@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { ContactForm } from "@/components/contact/contact-form";
+import { LoadingImage } from "@/components/ui/loading-image";
 import { getStudioInfo } from "@/lib/studio-info";
 import { MapPin, ExternalLink } from "lucide-react";
 
@@ -70,8 +71,41 @@ export default async function ContactPage() {
                   </div>
                 )}
 
-                <div className="aspect-video rounded-lg flex items-center justify-center mt-6" style={{ background: "#E2E6EC", border: "1px solid #D4D9E2" }}>
-                  <p className="text-sm" style={{ color: "#6B7589" }}>Map embed placeholder</p>
+                {/* Studio map */}
+                <div className="mt-6">
+                  {studio.mapImage ? (
+                    <a
+                      href={studio.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block relative aspect-video rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group"
+                    >
+                      <LoadingImage
+                        src={studio.mapImage}
+                        alt={`${studio.region}, ${studio.location}`}
+                        fill
+                        containerClassName="absolute inset-0"
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-500"
+                        sizes="(max-width: 1024px) 100vw, 33vw"
+                      />
+                      <div className="absolute bottom-2 right-2 px-2 py-1 rounded text-xs font-medium text-white" style={{ background: "rgba(0,0,0,0.5)" }}>
+                        Open in Maps →
+                      </div>
+                    </a>
+                  ) : (
+                    <a
+                      href={studio.mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="aspect-video rounded-lg flex items-center justify-center hover:opacity-80 transition-opacity"
+                      style={{ background: "#E2E6EC", border: "1px solid #D4D9E2" }}
+                    >
+                      <div className="text-center">
+                        <MapPin className="w-6 h-6 mx-auto mb-1" style={{ color: "#6B7589" }} />
+                        <p className="text-sm" style={{ color: "#6B7589" }}>View on Map →</p>
+                      </div>
+                    </a>
+                  )}
                 </div>
               </div>
             </AnimatedSection>

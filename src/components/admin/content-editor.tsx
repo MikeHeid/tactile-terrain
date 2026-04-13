@@ -26,6 +26,8 @@ const labels: Record<string, string> = {
   email_from_address: "Email — From Address",
   admin_password: "Admin — Primary Password",
   admin_extra_passwords: "Admin — Additional Passwords (one per line)",
+  studio_map_image: "Studio — Map Image URL",
+  studio_map_url: "Studio — Map Link (click destination)",
 };
 
 // Keys that should use a single-line input instead of textarea
@@ -38,6 +40,8 @@ const singleLineKeys = new Set([
   "notification_email",
   "email_from_address",
   "admin_password",
+  "studio_map_image",
+  "studio_map_url",
 ]);
 
 // Keys that should use password masking
