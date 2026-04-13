@@ -1,0 +1,83 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model GalleryItem {
+  id          String         @id @default(cuid())
+  title       String
+  slug        String         @unique
+  description String
+  category    String
+  images      GalleryImage[]
+  scale       String?
+  year        String?
+  location    String?
+  sortOrder   Int            @default(0)
+  featured    Boolean        @default(false)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model GalleryImage {
+  id            String      @id @default(cuid())
+  url           String
+  alt           String      @default("")
+  sortOrder     Int         @default(0)
+  galleryItemId String
+  galleryItem   GalleryItem @relation(fields: [galleryItemId], references: [id], onDelete: Cascade)
+
+  @@index([galleryItemId])
+}
+
+model ContactSubmission {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model CustomOrderInquiry {
+  id           String   @id @default(cuid())
+  name         String
+  email        String
+  organization String?
+  projectType  String
+  scale        String?
+  timeline     String?
+  budgetRange  String?
+  description  String
+  fileUrl      String?
+  read         Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model HomepageContent {
+  id          String   @id @default("singleton")
+  heroTagline String
+  introText   String
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String  @id @default(cuid())
+  name      String
+  role      String
+  company   String?
+  imageUrl  String?
+  sortOrder Int     @default(0)
+}
+
+model SiteContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  content   String
+  updatedAt DateTime @updatedAt
+}
