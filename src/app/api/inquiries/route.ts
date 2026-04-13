@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { customOrderSchema } from "@/lib/validations";
+import { sendNotificationEmail, inquiryEmailHtml, fileUrlToAttachment } from "@/lib/email";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
@@ -62,7 +63,23 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    // TODO: Send email notification to admin
+    // Send email notification with attachment if file was uploaded
+    (async () => {
+      const attachments = [];
+      if (fileUrl && file) {
+        const attachment = await fileUrlToAttachment(
+          fileUrl.startsWith("/") ? `${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:5650"}${fileUrl}` : fileUrl,
+          file.name
+        );
+        if (attachment) attachments.push(attachment);
+      }
+
+      await sendNotificationEmail({
+        subject: `Custom Inquiry: ${parsed.data.projectType} — from ${parsed.data.name}`,
+        html: inquiryEmailHtml({ ...parsed.data, fileUrl }),
+        attachments,
+      });
+    })().catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {

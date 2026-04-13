@@ -16,7 +16,7 @@ export function ClientsSection() {
       <AnimatedSection>
         <SectionTitle
           subtitle="Our maps serve diverse clients across sectors that value precision and storytelling"
-          className="text-center"
+          center
         >
           Who We Work With
         </SectionTitle>

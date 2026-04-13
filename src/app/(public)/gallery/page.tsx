@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { GalleryGrid } from "@/components/gallery/gallery-grid";
+
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
@@ -18,8 +19,8 @@ export default async function GalleryPage() {
   const categories = [...new Set(items.map((item) => item.category))].sort();
 
   return (
-    <div className="pt-24 pb-16 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto">
+    <div className="pt-24 pb-16">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="mb-12">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-space-grotesk)]">
             Our Work

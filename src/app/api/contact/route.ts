@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { contactSchema } from "@/lib/validations";
+import { sendNotificationEmail, contactEmailHtml } from "@/lib/email";
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,7 +20,11 @@ export async function POST(request: NextRequest) {
       data: parsed.data,
     });
 
-    // TODO: Send email notification to admin
+    // Send email notification
+    sendNotificationEmail({
+      subject: `Contact: ${parsed.data.subject} — from ${parsed.data.name}`,
+      html: contactEmailHtml(parsed.data),
+    }).catch(() => {});
 
     return NextResponse.json({ success: true });
   } catch (error) {

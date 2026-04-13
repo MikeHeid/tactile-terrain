@@ -21,6 +21,9 @@ const labels: Record<string, string> = {
   etsy_url: "Studio — Etsy Store URL",
   etsy_label: "Studio — Etsy Link Text",
   footer_tagline: "Footer — Tagline",
+  resend_api_key: "Email — Resend API Key",
+  notification_email: "Email — Send Notifications To",
+  email_from_address: "Email — From Address",
 };
 
 export function ContentEditor({

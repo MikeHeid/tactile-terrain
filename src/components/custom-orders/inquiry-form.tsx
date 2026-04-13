@@ -16,10 +16,10 @@ const projectTypes = [
 ];
 
 const budgetRanges = [
-  { value: "under-5k", label: "Under $5,000 CAD" },
-  { value: "5k-15k", label: "$5,000 - $15,000 CAD" },
-  { value: "15k-50k", label: "$15,000 - $50,000 CAD" },
-  { value: "50k-plus", label: "$50,000+ CAD" },
+  { value: "under-25k", label: "Under $25,000 CAD" },
+  { value: "25k-50k", label: "$25,000 - $50,000 CAD" },
+  { value: "50k-100k", label: "$50,000 - $100,000 CAD" },
+  { value: "100k-plus", label: "$100,000+ CAD" },
   { value: "unsure", label: "Not sure yet" },
 ];
 
