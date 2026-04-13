@@ -46,13 +46,20 @@ const passwordKeys = new Set([
   "admin_password",
 ]);
 
+// Keys managed by dedicated admin pages — hide from text editor
+const hiddenKeys = new Set([
+  "about_hero_images",
+]);
+
 export function ContentEditor({
   content: initialContent,
 }: {
   content: SiteContent[];
 }) {
   const router = useRouter();
-  const [entries, setEntries] = useState(initialContent);
+  const [entries, setEntries] = useState(
+    initialContent.filter((e) => !hiddenKeys.has(e.key))
+  );
   const [saving, setSaving] = useState<string | null>(null);
   const [saved, setSaved] = useState<string | null>(null);
   const [revealed, setRevealed] = useState<Set<string>>(new Set());

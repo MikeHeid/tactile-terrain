@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { prisma } from "@/lib/prisma";
+import { LoadingImage } from "@/components/ui/loading-image";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { TeamGrid } from "@/components/about/team-grid";
@@ -36,66 +36,67 @@ We see maps as storytelling tools — works of art that draw people into the wor
     heroImages = [];
   }
 
+  const paragraphs = story.split("\n\n").filter(Boolean);
+
   return (
     <div className="pt-24">
-      {/* Hero */}
-      <Section>
-        <AnimatedSection>
-          <div className="max-w-3xl">
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-space-grotesk)] mb-6">
+      {/* Our Story — heading + text + photos all together */}
+      <section className="py-12 md:py-16">
+        <div className="max-w-7xl mx-auto px-6 md:px-12">
+          <AnimatedSection>
+            {/* Page title + quote */}
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-space-grotesk)] mb-3">
               About Tactile Terrain
             </h1>
-            <p className="text-lg text-muted italic">
+            <p className="text-base text-muted italic mb-10 max-w-2xl">
               &ldquo;These models allow us to see the Earth as if we were giants, reaching
               down to touch the sculpted surface of our world.&rdquo;
             </p>
-          </div>
-        </AnimatedSection>
-      </Section>
 
-      {/* Workshop photos */}
-      {heroImages.length > 0 && (
-        <Section style={{ background: "#EDF0F4" }}>
-          <AnimatedSection>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-              {heroImages.map((img, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-[4/3] rounded-xl overflow-hidden shadow-md animate-[imageLoad_0.6s_ease-out_both]"
-                  style={{ animationDelay: `${i * 0.1}s` }}
-                >
-                  <Image
-                    src={img.url}
-                    alt={img.alt}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                    loading={i < 2 ? "eager" : "lazy"}
-                  />
-                  <div
-                    className="absolute inset-0 mix-blend-multiply opacity-5"
-                    style={{ background: "linear-gradient(135deg, #1A2D42, #2D7A9C)" }}
-                  />
+            {/* Story content with photos */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              {/* Text */}
+              <div>
+                <h2 className="text-2xl font-bold tracking-tight font-[family-name:var(--font-space-grotesk)] mb-5" style={{ color: "#1A1D24" }}>
+                  Our Story
+                </h2>
+                <div className="space-y-4">
+                  {paragraphs.map((paragraph, i) => (
+                    <p key={i} className="text-muted leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* Photos — masonry-style collage */}
+              {heroImages.length > 0 && (
+                <div className="grid grid-cols-2 gap-3">
+                  {heroImages.map((img, i) => (
+                    <div
+                      key={i}
+                      className={`relative rounded-lg overflow-hidden shadow-md animate-[imageLoad_0.6s_ease-out_both] ${
+                        i === 0 ? "col-span-2 aspect-[2/1]" : "aspect-[4/3]"
+                      }`}
+                      style={{ animationDelay: `${i * 0.12}s` }}
+                    >
+                      <LoadingImage
+                        src={img.url}
+                        alt={img.alt}
+                        fill
+                        containerClassName="absolute inset-0"
+                        className="object-cover"
+                        sizes={i === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
+                        loading={i < 2 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </AnimatedSection>
-        </Section>
-      )}
-
-      {/* Story */}
-      <Section>
-        <AnimatedSection>
-          <SectionTitle>Our Story</SectionTitle>
-          <div className="max-w-3xl space-y-4">
-            {story.split("\n\n").map((paragraph, i) => (
-              <p key={i} className="text-muted leading-relaxed">
-                {paragraph}
-              </p>
-            ))}
-          </div>
-        </AnimatedSection>
-      </Section>
+        </div>
+      </section>
 
       {/* Process */}
       <ProcessTimeline />

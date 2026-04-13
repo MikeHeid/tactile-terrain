@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Lightbox } from "@/components/ui/lightbox";
+import { LoadingImage } from "@/components/ui/loading-image";
 import { MapPin, Calendar, Maximize2 } from "lucide-react";
 
 interface GalleryImage {
@@ -81,11 +81,12 @@ export function GalleryGrid({ items, categories }: GalleryGridProps) {
             <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "#EDF0F4" }}>
               {item.images[0] ? (
                 <>
-                  <Image
+                  <LoadingImage
                     src={item.images[0].url}
                     alt={item.images[0].alt || item.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105 animate-[imageLoad_0.6s_ease-out_both]"
+                    containerClassName="absolute inset-0"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
                   />

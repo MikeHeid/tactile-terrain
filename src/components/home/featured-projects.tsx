@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { LoadingImage } from "@/components/ui/loading-image";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { MapPin } from "lucide-react";
@@ -37,10 +37,11 @@ export function FeaturedProjects({ projects }: FeaturedProjectsProps) {
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden" style={{ background: "#EDF0F4" }}>
                   {project.images[0] ? (
-                    <Image
+                    <LoadingImage
                       src={project.images[0].url}
                       alt={project.images[0].alt || project.title}
                       fill
+                      containerClassName="absolute inset-0"
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                     />
