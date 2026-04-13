@@ -16,6 +16,11 @@ const labels: Record<string, string> = {
   about_process: "About — Process Description",
   technology_intro: "Technology — Introduction",
   custom_orders_intro: "Custom Orders — Introduction",
+  studio_region: "Studio — Region Name",
+  studio_location: "Studio — Full Location",
+  etsy_url: "Studio — Etsy Store URL",
+  etsy_label: "Studio — Etsy Link Text",
+  footer_tagline: "Footer — Tagline",
 };
 
 export function ContentEditor({

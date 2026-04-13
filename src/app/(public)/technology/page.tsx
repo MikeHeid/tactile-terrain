@@ -1,14 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import { prisma } from "@/lib/prisma";
 import { Section, SectionTitle } from "@/components/ui/section";
 import { AnimatedSection } from "@/components/ui/animated-section";
-import {
-  Globe,
-  Cpu,
-  Printer,
-  Paintbrush,
-  Monitor,
-  Lightbulb,
-} from "lucide-react";
+import { Cpu } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Technology",
@@ -16,58 +13,11 @@ export const metadata: Metadata = {
     "Learn about the intersection of GIS data processing, CNC fabrication, and interactive digital overlays that power Tactile Terrain's 3D maps.",
 };
 
-const techSections = [
-  {
-    icon: Globe,
-    title: "GIS Data Processing",
-    description:
-      "Every map begins with high-resolution geographic information system (GIS) data. We source digital elevation models (DEMs), bathymetric surveys, and satellite imagery to build an accurate digital representation of the terrain. This data is processed to determine optimal scale, vertical exaggeration, and the geographic extent of the final model.",
-    detail:
-      "Cartographic scale represents the relationship between model size and real-world terrain. Scale choices involve trade-offs between detail visibility, relief height, and geographic area coverage.",
-  },
-  {
-    icon: Cpu,
-    title: "CNC Milling",
-    description:
-      "Digital terrain models are translated into toolpaths for computer numerical control (CNC) milling machines. High-density foam or wood substrates are carved with sub-millimeter precision, capturing every ridge, valley, and coastal contour of the landscape.",
-    detail:
-      "Multi-axis milling allows us to reproduce complex overhangs and steep terrain features that would be impossible with simple 2.5D cutting.",
-  },
-  {
-    icon: Printer,
-    title: "3D Printing",
-    description:
-      "For certain projects, stereolithography (SLA) or fused deposition modeling (FDM) 3D printing is used to produce terrain models or small-scale interpretive elements. This is especially valuable for complex geometries like cave systems or intricate coastal features.",
-    detail:
-      "Small relief maps available through our Etsy store are produced using high-resolution 3D printing at scales suitable for desktop display.",
-  },
-  {
-    icon: Paintbrush,
-    title: "Hand Finishing & Painting",
-    description:
-      "Skilled painters apply terrain coloring, vegetation textures, water features, and interpretive elements by hand. This process transforms a raw CNC-carved blank into a vivid, accurate representation of the landscape. Road networks, trails, and boundary lines are carefully applied.",
-    detail:
-      "Decorative icons mark viewpoints, campsites, and cultural sites. Hiking trails are color-coded by difficulty. Place names appear in multiple languages where culturally appropriate.",
-  },
-  {
-    icon: Monitor,
-    title: "Interactive Digital Overlays",
-    description:
-      "Many of our installations incorporate embedded LEDs connected to push buttons, allowing visitors to illuminate specific features — mountain peaks, cultural sites, or geographic boundaries. Legends and labels can be presented in multiple languages, including Indigenous languages.",
-    detail:
-      "Button-activated lighting systems are engineered to be durable for high-traffic public installations while remaining intuitive for visitors of all ages.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Luminous Cartographs",
-    description:
-      "Our Luminous Cartograph technology uses projected light to create dynamic visualizations on the surface of a 3D terrain model. Visitors can cycle through views showing elevation, geological strata, light and shadow movement, historical events like wildfires, simulated weather, and seasonal changes — all controlled via touchscreen.",
-    detail:
-      "This technology bridges the gap between physical and digital mapping, offering an interactive experience that static maps cannot provide.",
-  },
-];
+export default async function TechnologyPage() {
+  const sections = await prisma.technologySection.findMany({
+    orderBy: { sortOrder: "asc" },
+  });
 
-export default function TechnologyPage() {
   return (
     <div className="pt-24">
       <Section>
@@ -76,7 +26,7 @@ export default function TechnologyPage() {
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight font-[family-name:var(--font-space-grotesk)] mb-6">
               Our Technology
             </h1>
-            <p className="text-lg text-muted">
+            <p className="text-lg" style={{ color: "#6B7589" }}>
               At the intersection of geographic science, precision fabrication,
               and interpretive art — our process transforms raw terrain data into
               immersive physical experiences.
@@ -85,32 +35,62 @@ export default function TechnologyPage() {
         </AnimatedSection>
       </Section>
 
-      {techSections.map((section, i) => (
+      {sections.map((section, i) => (
         <Section
-          key={section.title}
-          className={i % 2 === 0 ? "bg-surface-light/50" : ""}
+          key={section.id}
+          style={i % 2 === 0 ? { background: "#EDF0F4" } : undefined}
         >
           <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-              <div className="lg:col-span-1">
-                <section.icon className="w-10 h-10 text-accent" />
+            <div className={`grid grid-cols-1 lg:grid-cols-2 gap-10 items-center`}>
+              {/* Image */}
+              <div className={i % 2 !== 0 ? "lg:order-2" : ""}>
+                <div className="relative aspect-[3/2] rounded-xl overflow-hidden shadow-lg" style={{ background: "#EDF0F4" }}>
+                  {section.imageUrl ? (
+                    <>
+                      <Image
+                        src={section.imageUrl}
+                        alt={section.imageAlt || section.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        loading={i === 0 ? "eager" : "lazy"}
+                      />
+                      <div
+                        className="absolute inset-0 mix-blend-multiply opacity-10"
+                        style={{ background: "linear-gradient(135deg, #1A2D42, #2D7A9C)" }}
+                      />
+                    </>
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Cpu className="w-16 h-16" style={{ color: "#D4D9E2" }} />
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="lg:col-span-7">
-                <h2 className="text-2xl font-bold font-[family-name:var(--font-space-grotesk)] mb-4">
+
+              {/* Text */}
+              <div className={i % 2 !== 0 ? "lg:order-1" : ""}>
+                <span
+                  className="inline-block text-xs font-medium uppercase tracking-wider px-3 py-1 rounded-full mb-4"
+                  style={{
+                    background: section.badge ? "#2D7A9C" : "#EDF0F4",
+                    color: section.badge ? "#ffffff" : "#2D7A9C",
+                  }}
+                >
+                  {section.badge || `0${i + 1}`}
+                </span>
+                <h2 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-space-grotesk)] mb-4" style={{ color: "#1A1D24" }}>
                   {section.title}
                 </h2>
-                <p className="text-muted leading-relaxed mb-4">
+                <p className="leading-relaxed mb-4" style={{ color: "#6B7589" }}>
                   {section.description}
                 </p>
-                <p className="text-sm text-muted/70 leading-relaxed border-l-2 border-accent/30 pl-4">
+                <p
+                  className="text-sm leading-relaxed border-l-2 pl-4"
+                  style={{ color: "#6B7589", opacity: 0.8, borderColor: "#2D7A9C" }}
+                >
                   {section.detail}
                 </p>
-              </div>
-              <div className="lg:col-span-4">
-                {/* Placeholder for future diagrams */}
-                <div className="aspect-square rounded-lg bg-surface-light border border-border/50 flex items-center justify-center">
-                  <section.icon className="w-16 h-16 text-border/50" />
-                </div>
               </div>
             </div>
           </AnimatedSection>

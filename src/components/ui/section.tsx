@@ -29,7 +29,7 @@ export function SectionTitle({
     <div className={cn("mb-12", className)}>
       <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{children}</h2>
       {subtitle && (
-        <p className="mt-4 text-lg text-muted max-w-2xl">{subtitle}</p>
+        <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">{subtitle}</p>
       )}
     </div>
   );

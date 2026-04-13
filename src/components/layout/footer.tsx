@@ -9,7 +9,15 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
-export function Footer() {
+interface StudioInfo {
+  region: string;
+  location: string;
+  etsyUrl: string;
+  etsyLabel: string;
+  footerTagline: string;
+}
+
+export function Footer({ studioInfo }: { studioInfo: StudioInfo }) {
   return (
     <footer style={{ background: "#0F1A2A", color: "#ffffff" }}>
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-12">
@@ -23,7 +31,7 @@ export function Footer() {
               className="h-8 w-auto mb-4"
             />
             <p className="text-sm text-white/60 max-w-xs">
-              Precision 3D topographic maps and immersive geographic installations.
+              {studioInfo.footerTagline}
             </p>
           </div>
 
@@ -49,16 +57,18 @@ export function Footer() {
             <h4 className="text-sm font-semibold uppercase tracking-wider text-white/50 mb-4">
               Studio
             </h4>
-            <p className="text-sm text-white/60">qathet region</p>
-            <p className="text-sm text-white/60">Coastal British Columbia, Canada</p>
-            <a
-              href="https://tactileterrain.etsy.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-[#6CB4D4] hover:text-[#8CCCE8] transition-colors mt-2 inline-block"
-            >
-              Visit our Etsy Store →
-            </a>
+            <p className="text-sm text-white/60">{studioInfo.region}</p>
+            <p className="text-sm text-white/60">{studioInfo.location}</p>
+            {studioInfo.etsyUrl && (
+              <a
+                href={studioInfo.etsyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-[#6CB4D4] hover:text-[#8CCCE8] transition-colors mt-2 inline-block"
+              >
+                {studioInfo.etsyLabel} →
+              </a>
+            )}
           </div>
         </div>
 

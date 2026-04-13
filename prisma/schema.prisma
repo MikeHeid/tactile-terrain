@@ -81,3 +81,16 @@ model SiteContent {
   content   String
   updatedAt DateTime @updatedAt
 }
+
+model TechnologySection {
+  id          String  @id @default(cuid())
+  title       String
+  description String
+  detail      String
+  imageUrl    String?
+  imageAlt    String  @default("")
+  badge       String?
+  sortOrder   Int     @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

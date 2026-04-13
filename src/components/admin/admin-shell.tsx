@@ -10,6 +10,7 @@ import {
   Mail,
   Users,
   FileText,
+  Cpu,
   LogOut,
 } from "lucide-react";
 
@@ -17,6 +18,7 @@ const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/gallery", icon: Images, label: "Gallery" },
   { href: "/admin/homepage", icon: Home, label: "Homepage" },
+  { href: "/admin/technology", icon: Cpu, label: "Technology" },
   { href: "/admin/inquiries", icon: Mail, label: "Inquiries" },
   { href: "/admin/team", icon: Users, label: "Team" },
   { href: "/admin/content", icon: FileText, label: "Site Content" },
