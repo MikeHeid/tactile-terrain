@@ -85,7 +85,7 @@ export function GalleryGrid({ items, categories }: GalleryGridProps) {
                     src={item.images[0].url}
                     alt={item.images[0].alt || item.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="object-cover transition-transform duration-500 group-hover:scale-105 animate-[imageLoad_0.6s_ease-out_both]"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                     loading="lazy"
                   />

@@ -44,6 +44,38 @@ export async function POST(request: NextRequest) {
   }
 }
 
+export async function PUT(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { id, name, role, company, imageUrl } = body;
+
+    if (!id || !name || !role) {
+      return NextResponse.json(
+        { error: "ID, name, and role are required" },
+        { status: 400 }
+      );
+    }
+
+    const member = await prisma.teamMember.update({
+      where: { id },
+      data: {
+        name,
+        role,
+        company: company || null,
+        imageUrl: imageUrl || null,
+      },
+    });
+
+    return NextResponse.json(member);
+  } catch (error) {
+    console.error("Team update error:", error);
+    return NextResponse.json(
+      { error: "Failed to update team member" },
+      { status: 500 }
+    );
+  }
+}
+
 export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json();

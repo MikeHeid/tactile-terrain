@@ -66,10 +66,11 @@ export function Lightbox({
         {current ? (
           <div className="relative flex-1 min-h-[300px] md:min-h-[500px]">
             <Image
+              key={current.url}
               src={current.url}
               alt={current.alt || title || "Gallery image"}
               fill
-              className="object-contain"
+              className="object-contain animate-[imageLoad_0.4s_ease-out_both]"
               sizes="(max-width: 768px) 100vw, 70vw"
               priority
             />
