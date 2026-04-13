@@ -52,10 +52,11 @@ export function Navbar() {
               alt="Tactile Terrain"
               width={40}
               height={40}
-              className="h-8 md:h-9 w-auto"
+              className="h-8 md:h-9 w-auto animate-[logoSpin_0.8s_ease-out_0.1s_both]"
+              style={{ perspective: "400px" }}
               priority
             />
-            <span className="text-white font-[family-name:var(--font-space-grotesk)] font-semibold text-base md:text-lg tracking-tight">
+            <span className="text-white font-[family-name:var(--font-space-grotesk)] font-semibold text-base md:text-lg tracking-tight animate-[logoTextSlide_0.5s_ease-out_0.4s_both]">
               Tactile Terrain™
             </span>
           </Link>

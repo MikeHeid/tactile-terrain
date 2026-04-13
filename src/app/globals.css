@@ -62,6 +62,35 @@ html {
 }
 
 /* Hero fade-in animation — pure CSS, no JS dependency */
+@keyframes logoSpin {
+  from {
+    transform: rotateY(90deg);
+    opacity: 0;
+  }
+  60% {
+    transform: rotateY(-10deg);
+    opacity: 1;
+  }
+  80% {
+    transform: rotateY(5deg);
+  }
+  to {
+    transform: rotateY(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes logoTextSlide {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 @keyframes imageLoad {
   from {
     opacity: 0;

@@ -72,8 +72,19 @@ export function Footer({ studioInfo }: { studioInfo: StudioInfo }) {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-white/10 text-center text-xs text-white/40">
-          © {new Date().getFullYear()} Tactile Terrain. All rights reserved.
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-white/40">
+          <span>© {new Date().getFullYear()} Tactile Terrain. All rights reserved.</span>
+          <span>
+            Web design by{" "}
+            <a
+              href="https://www.maximinimal.ca"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white/60 hover:text-white transition-colors"
+            >
+              Maximinimal
+            </a>
+          </span>
         </div>
       </div>
     </footer>

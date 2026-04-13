@@ -96,6 +96,27 @@ export default async function TechnologyPage() {
           </AnimatedSection>
         </Section>
       ))}
+
+      {/* CTA */}
+      <Section style={{ background: "#EDF0F4" }}>
+        <AnimatedSection>
+          <div className="text-center">
+            <h2 className="text-2xl md:text-3xl font-bold font-[family-name:var(--font-space-grotesk)] mb-4" style={{ color: "#1A1D24" }}>
+              See the Results
+            </h2>
+            <p className="text-lg mb-8 max-w-xl mx-auto" style={{ color: "#6B7589" }}>
+              Explore our portfolio of completed projects — from national park installations to private commissions.
+            </p>
+            <a
+              href="/gallery"
+              className="inline-flex items-center justify-center px-7 py-3 text-base font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2"
+              style={{ background: "#2D7A9C", color: "#ffffff" }}
+            >
+              Our Work →
+            </a>
+          </div>
+        </AnimatedSection>
+      </Section>
     </div>
   );
 }

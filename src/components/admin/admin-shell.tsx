@@ -11,6 +11,7 @@ import {
   Users,
   FileText,
   Cpu,
+  BookOpen,
   LogOut,
 } from "lucide-react";
 
@@ -18,6 +19,7 @@ const navItems = [
   { href: "/admin", icon: LayoutDashboard, label: "Dashboard" },
   { href: "/admin/gallery", icon: Images, label: "Gallery" },
   { href: "/admin/homepage", icon: Home, label: "Homepage" },
+  { href: "/admin/about", icon: BookOpen, label: "About Page" },
   { href: "/admin/technology", icon: Cpu, label: "Technology" },
   { href: "/admin/inquiries", icon: Mail, label: "Inquiries" },
   { href: "/admin/team", icon: Users, label: "Team" },
