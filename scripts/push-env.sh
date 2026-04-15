@@ -1,25 +1,23 @@
 #!/usr/bin/env bash
-set -e
 set -a
 source .env
 set +a
 
 push() {
-  local name="$1" value="$2"
-  for env in production preview development; do
-    vercel env rm "$name" "$env" --yes >/dev/null 2>&1 || true
-    vercel env add "$name" "$env" --value "$value" --yes >/dev/null 2>&1
+  local name="$1" value="$2" env="$3"
+  vercel env rm "$name" "$env" --yes 2>/dev/null
+  if vercel env add "$name" "$env" --value "$value" --yes 2>&1 | grep -q "Added"; then
     echo "  ✓ $name -> $env"
-  done
+  else
+    echo "  ✗ $name -> $env (FAILED)"
+  fi
 }
 
-push DATABASE_URL "$DATABASE_URL"
-push DATABASE_URL_UNPOOLED "$DATABASE_URL_UNPOOLED"
-push ADMIN_PASSWORD "$ADMIN_PASSWORD"
-push SESSION_SECRET "$SESSION_SECRET"
-push NEXT_PUBLIC_SITE_URL "$NEXT_PUBLIC_SITE_URL"
-push BLOB_READ_WRITE_TOKEN "$BLOB_READ_WRITE_TOKEN"
+for v in DATABASE_URL DATABASE_URL_UNPOOLED ADMIN_PASSWORD SESSION_SECRET NEXT_PUBLIC_SITE_URL BLOB_READ_WRITE_TOKEN; do
+  for env in production preview development; do
+    push "$v" "${!v}" "$env"
+  done
+done
 
 echo ""
-echo "Env vars pushed. Current list:"
 vercel env ls
